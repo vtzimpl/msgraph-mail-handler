@@ -5,7 +5,7 @@ To install the `msgraph-mail-handler` library with Composer, either run `compose
 ```
 {
     "require": {
-        "vtzimpl/msgraph-mail-handler": "^0.1.01"
+        "vtzimpl/msgraph-mail-handler": "@dev"
     }
 }
 ```
