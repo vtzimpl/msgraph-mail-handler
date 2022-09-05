@@ -1,0 +1,20 @@
+{
+    "name": "vtzimplakis/msgraph-mail-handler",
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "microsoft/microsoft-graph": "^1.74"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Vtzimpl\\MsgraphMailHandler\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tzimplakis Vasilis",
+            "email": "vtzimpl@yahoo.gr"
+        }
+    ],
+    "minimum-stability": "stable"
+}
