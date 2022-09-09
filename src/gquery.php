@@ -13,7 +13,7 @@ use Microsoft\Graph\Exception\GraphException;
 use Dotenv;
 
 
-class Gquery
+class MsgraphMailHandler
 {
 
 private $clientId;
