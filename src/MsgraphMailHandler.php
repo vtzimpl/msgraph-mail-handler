@@ -31,7 +31,7 @@ private $dotenv;
 
 
 function __construct() {
-$this->dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$this->dotenv = Dotenv\Dotenv::createImmutable(base_path());
 $this->dotenv->load();	  
 $this->clientId=$_ENV['CLIENT_ID'];
 $this->clientSecret=$_ENV['CLIENT_SECRET'];
