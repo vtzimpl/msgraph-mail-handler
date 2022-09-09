@@ -1,7 +1,8 @@
 {
     "name": "vtzimpl/msgraph-mail-handler",
     "require": {
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "microsoft/microsoft-graph": "^1.72"
     },
     "license": "MIT",
     "autoload": {

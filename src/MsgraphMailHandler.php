@@ -14,6 +14,7 @@ use Dotenv;
 
 
 class MsgraphMailHandler
+
 {
 
 private $clientId;
