@@ -1,7 +1,7 @@
 <?php 
 namespace Vtzimpl\MsgraphMailHandler;
 
-require_once    dirname(__DIR__).'/vendor/autoload.php'; 
+
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model;
 use Microsoft\Graph\Core\GraphConstants;
@@ -30,7 +30,7 @@ private $dotenv;
 
 
 function __construct() {
-$this->dotenv = Dotenv\Dotenv::createImmutable( dirname(__DIR__));
+$this->dotenv = Dotenv\Dotenv::createImmutable(base_path());
 $this->dotenv->load();	  
 $this->clientId=$_ENV['CLIENT_ID'];
 $this->clientSecret=$_ENV['CLIENT_SECRET'];
