@@ -76,18 +76,102 @@ $this->tenantId=$_ENV['TENAND_ID'];
 	
 	
 			    public function searchm($userId,$search_term) //general
-    {
-				$search_term_enc=json_encode($search_term);
-                $accessToken = $this->token();
-                $graph = new Graph();
-                $graph->setAccessToken($accessToken);
-				$messageCollection = $graph->createRequest("GET", "/users/$userId//messages?\$search=$search_term_enc")
-                                ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
-                              ->execute();
-        return $messageCollection;
-    }
+                {
+                    $separator="Reply above this line.";
+                    $return_array=array();
+                    $search_term_enc=json_encode($search_term);
+                    $accessToken = $this->token();
+                    $graph = new Graph();
+                    $graph->setAccessToken($accessToken);
+                    $messageCollection = $graph->createRequest("GET", "/users/$userId//messages?\$search=$search_term_enc")
+                                            ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
+                                          ->execute();
+
+                                         foreach($messageCollection as $message)
+                                         {
+                                             $mes_part['subject']=$message->getProperties()['subject'];
+                                             //$mes_part['body']=$message->getProperties()['body']['content'];
+                                             $mes_part['body']=explode($separator,htmlspecialchars(trim(strip_tags($message->getProperties()['body']['content']))))[0];
+                                             array_push($return_array, $mes_part);
+                                         }
+                                         
+                                          
+                                          
+                                          
+                                     // dd($return_array    );
+                                          
+                                          
+                                          
+                                          
+                    return $return_array;
+                }
 	
-	
+               
+               
+               
+               
+                public function searchmf($userId,$searchinfolderid,$search_term) //search in particular folder
+                {
+                    $separator="Reply above this line.";
+                    $return_array=array();
+                    $search_term_enc=json_encode($search_term);
+                    $accessToken = $this->token();
+                    $graph = new Graph();
+                    $graph->setAccessToken($accessToken);
+                    $messageCollection = $graph->createRequest("GET", "/users/$userId/mailFolders/$searchinfolderid/messages?\$search=$search_term_enc")
+                                            ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
+                                          ->execute();
+                                         //dd($messageCollection);
+                                         foreach($messageCollection as $message)
+                                         {
+ 
+                                            //support_case_id, mail_id, mail_internetMessageId, mail_subject, mail_body_content, mail_weblink, mail_conversationId, mail_conversationIndex, mail_from, mail_sentDateTime, mail_receivedDateTime, mail_type, message_type
+                                            $mes_part['mail_id']=$message->getProperties()['id'];
+                                            $mes_part['mail_internetMessageId']=$message->getProperties()['internetMessageId'];
+                                            $mes_part['mail_subject']=$message->getProperties()['subject'];
+                                            $mes_part['mail_weblink']=$message->getProperties()['webLink'];
+                                            $mes_part['mail_conversationId']=$message->getProperties()['conversationId'];
+                                             $mes_part['mail_conversationIndex']=$message->getProperties()['conversationIndex'];
+                                             $mes_part['mail_from']=$message->getProperties()['from']['emailAddress']['address'];
+                                             $mes_part['mail_sentDateTime']=$message->getProperties()['sentDateTime'];
+                                             $mes_part['mail_receivedDateTime']=$message->getProperties()['receivedDateTime'];
+                                             //$mes_part['body']=$message->getProperties()['body']['content'];
+                                             $mes_part['mail_body_content']=explode($separator,htmlspecialchars(trim(strip_tags($message->getProperties()['body']['content']))))[0];
+                                             array_push($return_array, $mes_part);
+                                         }
+                                         
+                                          
+                                          
+                                          
+                                      //dd($return_array    );
+                                          
+                                          
+                                          
+                                          
+                    return $return_array;
+               
+               
+               
+               
+                                        }
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
+                
 	
 	
 	
@@ -97,7 +181,7 @@ $this->tenantId=$_ENV['TENAND_ID'];
                 $accessToken = $this->token();
                 $graph = new Graph();
                 $graph->setAccessToken($accessToken);
-				$messageCollection = $graph->createRequest("GET", "/users/$userId//messages?\$search=$search_term_enc&\$select=toRecipients,subject")
+				$messageCollection = $graph->createRequest("GET", "/users/$userId/messages?\$search=$search_term_enc&\$select=toRecipients,subject")
                                 ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
                               ->execute();
          return $messageCollection;
@@ -110,7 +194,7 @@ $this->tenantId=$_ENV['TENAND_ID'];
                 $accessToken = $this->token();
                 $graph = new Graph();
                 $graph->setAccessToken($accessToken);
-				$messageCollection = $graph->createRequest("GET", "/users/$userId//messages?\$search=subject:case")
+				$messageCollection = $graph->createRequest("GET", "/users/$userId/messages?\$search=subject:case")
                                 ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
                               ->execute();
   
