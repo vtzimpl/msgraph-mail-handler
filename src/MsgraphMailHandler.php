@@ -106,7 +106,8 @@ $this->tenantId=$_ENV['TENAND_ID'];
                     return $return_array;
                 }
 	
-              
+               
+               
                
                
                 public function searchmf($userId,$searchinfolderid,$search_term) //search in particular folder
@@ -123,9 +124,19 @@ $this->tenantId=$_ENV['TENAND_ID'];
                                          //dd($messageCollection);
                                          foreach($messageCollection as $message)
                                          {
- 
+                                            //dd($message);
                                             //support_case_id, mail_id, mail_internetMessageId, mail_subject, mail_body_content, mail_weblink, mail_conversationId, mail_conversationIndex, mail_from, mail_sentDateTime, mail_receivedDateTime, mail_type, message_type
+                                            $mes_part['hasAttachments']=$message->getProperties()['hasAttachments'];
                                             $mes_part['mail_id']=$message->getProperties()['id'];
+                                            if($mes_part['hasAttachments']){
+
+                                                $this->listattac($userId,$searchinfolderid,$mes_part['mail_id']);
+
+
+                                            }
+                                            
+                                            
+                                            
                                             $mes_part['mail_internetMessageId']=$message->getProperties()['internetMessageId'];
                                             $mes_part['mail_subject']=$message->getProperties()['subject'];
                                             $mes_part['mail_weblink']=$message->getProperties()['webLink'];
@@ -273,6 +284,33 @@ $this->tenantId=$_ENV['TENAND_ID'];
 	
 	
 	
+
+    public function listattac($userId,$searchinfolderid,$mail_id) //list attachments
+    {
+      
+                $accessToken = $this->token();
+                $graph = new Graph();
+                $graph->setAccessToken($accessToken);
+     			$messageCollection = $graph->createRequest("GET", "/users/$userId/mailFolders/$searchinfolderid/messages/$mail_id/attachments")// list mailfolders
+                                ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
+                              ->execute();
+  dd($messageCollection);
+				foreach($messageCollection as $item) {
+					//print_r($item->getProperties()['subject']);
+					print_r($item);
+					print_r("<br>");
+														}
+	
+        return $messageCollection;
+    }
+
+
+
+
+
+
+
+
 	
 	
 	
