@@ -294,7 +294,7 @@ $this->tenantId=$_ENV['TENAND_ID'];
      			$messageCollection = $graph->createRequest("GET", "/users/$userId/mailFolders/$searchinfolderid/messages/$mail_id/attachments")// list mailfolders
                                 ->setReturnType(Model\Message::class)//->setReturnType(Model\User::class)
                               ->execute();
-  dd($messageCollection);
+  //dd($messageCollection);
 				foreach($messageCollection as $item) {
 					//print_r($item->getProperties()['subject']);
 					print_r($item);
